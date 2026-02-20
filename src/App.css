@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@100;300&display=swap');#root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+  overflow-x: hidden;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; 
+  height: 100%;
+  scroll-behavior: smooth;
+}
+/* ================== KEYFRAMES ================== */
+
+@keyframes floatCool {
+  0% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+
+  25% {
+    transform: translateY(-12px) rotate(1deg) scale(1.02);
+  }
+
+  50% {
+    transform: translateY(-22px) rotate(-1deg) scale(1.04);
+  }
+
+  75% {
+    transform: translateY(-12px) rotate(1deg) scale(1.02);
+  }
+
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+}
+
+/* ================== SHADOW BREATH ================== */
+
+@keyframes shadowPulse {
+  0% {
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
+  }
+
+  50% {
+    filter: drop-shadow(0 25px 35px rgba(0,0,0,0.25));
+  }
+
+  100% {
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
+  }
+}
+
+/* ================== CLASSES ================== */
+
+.float {
+  animation: floatCool 6s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite,
+             shadowPulse 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.float-slow {
+  animation: floatCool 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite,
+             shadowPulse 8s ease-in-out infinite;
+}
+
+.float-fast {
+  animation: floatCool 4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite,
+             shadowPulse 4s ease-in-out infinite;
+}
+
+.resume-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.2vw;
+  background-color: #f2f2f2;
+  padding: 0.4vw;
+  padding-right: 3vw;
+  border-radius: 9999px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  overflow: hidden;
+  text-wrap-mode: nowrap;
+  z-index: 1;
+  font-size: 1vw;
+}
+
+@media screen and (max-width: 768px) {
+  .resume-btn {
+    padding: 1.5vw;
+    padding-right: 5vw;
+    gap: 6vw;
+    font-size: 14px;
+  }
+}
+/* This is the background layer animated by GSAP */
+.btn-fill-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%; /* Initial state */
+  height: 100%;
+  background-color: #008f5d;
+  z-index: -1; /* Behind text and icon */
+}
+
+.icon-container {
+  background-color: #008f5d;
+  width: 40px;
+  height: 40px;
+  color: white;
+  padding-right: 0.6vw;
+  padding-left: 0.6vw;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.arrow-icon {
+  width: 3.5vw;
+  height: 3.5vw;
+}
+@media screen and (max-width: 768px) {
+  .arrow-icon { 
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .icon-container {
+    width: 55px;
+    height: 55px;
+  }
+  .arrow-icon {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.btn-text {
+  /* Removed fixed font-size to inherit from .resume-btn */
+  font-weight: 500;
+  color: #333; /* Default dark color */
+  z-index: 2;
+  position: relative;
+}
+/* Optional: Add this to your global CSS or component styles for smoother performance */
+
+.antigravity-particle {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+/* Hardware acceleration hint */
+.antigravity-container {
+  transform:  translateZ(0);
+  -webkit-transform: translateZ(0);
+}

@@ -1,0 +1,9 @@
+# Hide environment files
+.env
+.env.local
+
+# Hide private key files
+*.pem
+
+# Hide SSH directory
+.ssh/Copied!   
