@@ -29,16 +29,17 @@ router.post('/admin/login', async (req, res) => {
 
         // 4. COOKIE USAGE: Hand the "Pass" to the browser
         res.cookie('admin_token', token, {
-            httpOnly: true, 
-            secure: process.env.NODE_ENV === 'production', 
-            sameSite: 'lax',
+            httpOnly: true,             // Secure: JS cannot read this
+            secure: true,               // MUST be true for SameSite: 'none'
+            sameSite: 'none',           // REQUIRED for cross-domain (Vercel -> Render)
             maxAge: 24 * 60 * 60 * 1000 
         });
 
-        // Set a non-httpOnly cookie as a hint for the frontend
+        // Set a non-httpOnly cookie as a hint for the frontend logic
         res.cookie('is_admin', 'true', {
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
+            httpOnly: false,            // MUST be false so document.cookie can see it
+            secure: true,               // MUST be true for SameSite: 'none'
+            sameSite: 'none',           // REQUIRED for cross-domain (Vercel -> Render)
             maxAge: 24 * 60 * 60 * 1000
         });
 

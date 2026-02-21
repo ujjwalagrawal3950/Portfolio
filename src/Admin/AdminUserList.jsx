@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Trash2, User, Fingerprint, RefreshCcw, Search, Database, XCircle } from 'lucide-react';
 import { toast } from 'sonner'; // Assuming you are using sonner for notifications
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const AdminUserList = () => {
     const [users, setUsers] = useState([]);
@@ -13,7 +13,7 @@ const AdminUserList = () => {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`${API_BASE_URL}/users`, {
+            const res = await fetch(`${API_BASE_URL}/admin/users`, {
                 // REQUIRED: Sends the JWT cookie to verify you are the admin
                 credentials: 'include'
             });
