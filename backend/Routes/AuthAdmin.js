@@ -28,26 +28,27 @@ router.post('/admin/login', async (req, res) => {
         );
 
         // 4. COOKIE USAGE: Hand the "Pass" to the browser
-        const isProduction = process.env.NODE_ENV === 'production';
-
+        // FORCE SameSite=none and Secure=true for Cross-Domain Mobile Support
+        // Even in local dev, this is safer for modern browser testing
         res.cookie('admin_token', token, {
             httpOnly: true,
-            secure: isProduction,       // Only secure in production
-            sameSite: isProduction ? 'none' : 'lax', 
+            secure: true,               // MUST be true for sameSite: 'none'
+            sameSite: 'none',           // REQUIRED for Vercel -> Render cross-domain
             maxAge: 24 * 60 * 60 * 1000 
         });
 
         // Set a non-httpOnly cookie/hint for the frontend
         res.cookie('is_admin', 'true', {
             httpOnly: false,
-            secure: isProduction,       // Only secure in production
-            sameSite: isProduction ? 'none' : 'lax',
+            secure: true,               // MUST be true for sameSite: 'none'
+            sameSite: 'none',           // REQUIRED for Vercel -> Render cross-domain
             maxAge: 24 * 60 * 60 * 1000
         });
 
         res.json({ 
             message: "Access Granted",
-            success: true // Adding a flag for the frontend
+            success: true,
+            token: token // This is the key for the "Guaranteed" solution
         });
 
     } catch (error) {

@@ -14,7 +14,10 @@ export default function AdminDashboard() {
         try {
             const res = await fetch(`${API_BASE_URL}/admin/pending`, {
                 // REQUIRED: Sends the JWT cookie to the server
-                credentials: 'include'
+                credentials: 'include',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+                }
             });
 
             const data = await res.json();
@@ -26,6 +29,7 @@ export default function AdminDashboard() {
             } else {
                 toast.error("Session Expired", { description: "Please login again." });
                 localStorage.removeItem('is_admin');
+                localStorage.removeItem('admin_token');
                 window.location.href = '/admin/login';
             }
         } catch (err) {
@@ -46,7 +50,10 @@ export default function AdminDashboard() {
         try {
             const res = await fetch(`${API_BASE_URL}/admin/${endpoint}`, {
                 method,
-                credentials: 'include'
+                credentials: 'include',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+                }
             });
 
             if (res.ok) {

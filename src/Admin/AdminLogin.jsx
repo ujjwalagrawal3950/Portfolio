@@ -26,8 +26,9 @@ const AdminLogin = () => {
             const data = await res.json();
 
             if (res.ok) {
-                // SAVE HINT: This prevents the 'bounce' back to login
+                // GUARANTEED FIX: Save the actual token for Mobile/Safari
                 localStorage.setItem('is_admin', 'true');
+                localStorage.setItem('admin_token', data.token);
 
                 toast.success("Identity Verified", {
                     description: "Establishing secure link to Command Center..."

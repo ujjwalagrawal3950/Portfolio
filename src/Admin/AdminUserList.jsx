@@ -13,9 +13,15 @@ const AdminUserList = () => {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`${API_BASE_URL}/admin/users`, {
+            // FIX: Ensure we are hitting /api/users
+            // Given your backend server.js app.use('/api', userRoutes)
+            // and userRoutes.js router.get('/users', ...)
+            const res = await fetch(`${API_BASE_URL}/users`, {
                 // REQUIRED: Sends the JWT cookie to verify you are the admin
-                credentials: 'include'
+                credentials: 'include',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+                }
             });
             const data = await res.json();
 
@@ -24,6 +30,7 @@ const AdminUserList = () => {
             } else {
                 toast.error("Session Expired", { description: "Please login again." });
                 localStorage.removeItem('is_admin');
+                localStorage.removeItem('admin_token');
                 window.location.href = '/admin/login';
             }
         } catch (err) {
@@ -47,6 +54,9 @@ const AdminUserList = () => {
                 method: 'DELETE',
                 // FIX: Added credentials to pass the protectAdmin middleware
                 credentials: 'include',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+                }
             });
 
             if (res.ok) {
