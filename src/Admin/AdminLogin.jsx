@@ -16,7 +16,7 @@ const AdminLogin = () => {
             console.log(import.meta.env.VITE_BACKEND_URL)
             // FIX 1: Explicitly define the full backend URL if proxy isn't set
             // Change 5000 to whatever port your Express server is running on
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/admin/login`, {
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/admin/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(creds),
