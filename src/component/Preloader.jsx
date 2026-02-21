@@ -83,3 +83,5 @@ const Preloader = ({ onLoadingComplete }) => {
 export default Preloader;
 
 // use some good font-style
+// Test-Path .git
+// Test-Path .gitignore

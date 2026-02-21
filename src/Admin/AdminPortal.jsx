@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, X, ShieldCheck, RefreshCcw } from 'lucide-react';
 import { toast } from 'sonner';
 
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL + '/api';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 export default function AdminDashboard() {
     const [pendingUsers, setPendingUsers] = useState([]);

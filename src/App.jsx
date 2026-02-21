@@ -34,7 +34,15 @@ const LandingPage = () => (
 
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    // Check if the preloader has already been shown in this session
+    return !sessionStorage.getItem('hasLoaded');
+  });
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+    sessionStorage.setItem('hasLoaded', 'true');
+  };
 
   const ProtectedAdmin = ({ children }) => {
     // Check for the non-httpOnly hint cookie
@@ -58,7 +66,7 @@ function App() {
 
       <AnimatePresence mode="wait">
         {isLoading && (
-          <Preloader onLoadingComplete={() => setIsLoading(false)} />
+          <Preloader onLoadingComplete={handleLoadingComplete} />
         )}
       </AnimatePresence>
 
