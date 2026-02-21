@@ -21,8 +21,9 @@ const AdminUserList = () => {
 
             if (res.ok) {
                 setUsers(data);
-            } else if (res.status === 401) {
-                toast.error("Unauthorized", { description: "Redirecting to login..." });
+            } else {
+                toast.error("Session Expired", { description: "Please login again." });
+                localStorage.removeItem('is_admin');
                 window.location.href = '/admin/login';
             }
         } catch (err) {

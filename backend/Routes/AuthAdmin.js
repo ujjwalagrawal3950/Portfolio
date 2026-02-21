@@ -28,22 +28,27 @@ router.post('/admin/login', async (req, res) => {
         );
 
         // 4. COOKIE USAGE: Hand the "Pass" to the browser
+        const isProduction = process.env.NODE_ENV === 'production';
+
         res.cookie('admin_token', token, {
-            httpOnly: true,             // Secure: JS cannot read this
-            secure: true,               // MUST be true for SameSite: 'none'
-            sameSite: 'none',           // REQUIRED for cross-domain (Vercel -> Render)
+            httpOnly: true,
+            secure: isProduction,       // Only secure in production
+            sameSite: isProduction ? 'none' : 'lax', 
             maxAge: 24 * 60 * 60 * 1000 
         });
 
-        // Set a non-httpOnly cookie as a hint for the frontend logic
+        // Set a non-httpOnly cookie/hint for the frontend
         res.cookie('is_admin', 'true', {
-            httpOnly: false,            // MUST be false so document.cookie can see it
-            secure: true,               // MUST be true for SameSite: 'none'
-            sameSite: 'none',           // REQUIRED for cross-domain (Vercel -> Render)
+            httpOnly: false,
+            secure: isProduction,       // Only secure in production
+            sameSite: isProduction ? 'none' : 'lax',
             maxAge: 24 * 60 * 60 * 1000
         });
 
-        res.json({ message: "Access Granted" });
+        res.json({ 
+            message: "Access Granted",
+            success: true // Adding a flag for the frontend
+        });
 
     } catch (error) {
         res.status(500).json({ message: "Auth System Error" });

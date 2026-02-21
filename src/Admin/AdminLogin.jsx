@@ -23,15 +23,16 @@ const AdminLogin = () => {
                 // Correct enum value is 'include'
                 credentials: 'include',
             });
-
             const data = await res.json();
 
             if (res.ok) {
+                // SAVE HINT: This prevents the 'bounce' back to login
+                localStorage.setItem('is_admin', 'true');
+
                 toast.success("Identity Verified", {
                     description: "Establishing secure link to Command Center..."
                 });
 
-                // FIX 2: Small delay for UX so they see the success toast before redirecting
                 setTimeout(() => {
                     navigate('/admin');
                 }, 1000);

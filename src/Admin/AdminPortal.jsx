@@ -25,6 +25,7 @@ export default function AdminDashboard() {
                 setPendingUsers(usersArray);
             } else {
                 toast.error("Session Expired", { description: "Please login again." });
+                localStorage.removeItem('is_admin');
                 window.location.href = '/admin/login';
             }
         } catch (err) {

@@ -42,8 +42,10 @@ function App() {
   };
 
   const ProtectedAdmin = ({ children }) => {
-    // Check for the non-httpOnly hint cookie
-    const isAuthenticated = document.cookie.includes('is_admin=true');
+    // Check for cookie OR localStorage hint
+    const isAuthenticated =
+      document.cookie.includes('is_admin=true') ||
+      localStorage.getItem('is_admin') === 'true';
 
     if (!isAuthenticated) {
       return <Navigate to="/admin/login" replace />;
