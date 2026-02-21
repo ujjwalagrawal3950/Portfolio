@@ -12,10 +12,7 @@ import WorkPage from './component/WorkPage';
 import ConnectPage from './component/ConnectPage';
 import AdminLogin from './Admin/AdminLogin';
 import Preloader from './component/Preloader';
-
-// Admin Page
 import AdminDashboard from './Admin/AdminPortal';
-
 import './App.css';
 import Contact from './component/Contact';
 import AdminUserList from './Admin/AdminUserList';
