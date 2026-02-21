@@ -15,13 +15,15 @@ function FrontPage() {
   const btnLeftRef = useRef(null);
 
   useEffect(() => {
-    let ctx = gsap.context(() => {
-      // Create the parallax timeline
+    let mm = gsap.matchMedia();
+
+    // 1. DESKTOP/LAPTOP ANIMATION (1024px and up)
+    mm.add("(min-width: 1024px)", () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top top", // Starts when FrontPage hits top
-          end: "bottom top", // Ends when FrontPage leaves top
+          start: "top top",
+          end: "bottom top",
           scrub: 1.5,
         },
       });
@@ -31,26 +33,26 @@ function FrontPage() {
         .to(imageRef.current, { y: -400 }, 0)
         .to(btnRightRef.current, { y: -550 }, 0)
         .to(btnLeftRef.current, { y: -750 }, 0);
-    }, containerRef);
+    });
 
-    return () => ctx.revert();
+    // 2. MOBILE/TABLET (No animation, static layout)
+    // No code needed here, the elements will follow the CSS below.
+
+    return () => mm.revert();
   }, []);
 
   return (
-    /* FIX: We keep h-[180vh] to provide "scrolling room" for the parallax, 
-       but we remove overflowX: 'hidden' if it's already in your CSS.
-    */
     <div
       ref={containerRef}
       id="home"
-      className="relative w-full lg:h-[160vh] h-[65vh] md:pb-32 bg-white overflow-hidden"
+      /* On Laptop: 160vh provides the scroll distance for parallax.
+         On Mobile: 70vh fits the content perfectly without extra scrolling.
+      */
+      className="relative w-full lg:h-[160vh] h-[70vh] md:pb-32 bg-white overflow-hidden"
     >
-
+      {/* GRID BACKGROUND - Hidden on mobile, shown on laptop */}
       <div
         ref={gridRef}
-        /* hidden: display:none on mobile and tablet
-           lg:block: display:block on laptop (1024px) and up 
-        */
         className="hidden lg:block absolute inset-0 opacity-[0.06] pointer-events-none z-0"
       >
         <div
@@ -66,32 +68,31 @@ function FrontPage() {
       </div>
 
       {/* TEXT SECTION */}
-      <div ref={textRef} className="relative w-full z-10 lg:pt-[24vh] pt-[18vh] px-8 max-w-[1500px] mx-auto">
-        <div className="grid grid-cols-2 grid-rows-2 lg:h-[72vh] h-[22vh] ">
+      <div ref={textRef} className="relative w-full z-10 lg:pt-[24vh] pt-[15vh] px-8 max-w-[1500px] mx-auto">
+        <div className="grid grid-cols-2 grid-rows-2 lg:h-[72vh] h-[22vh]">
           <div className="z-10 text-start">
-            <p className="lg:text-[3vw] text-[17px] text-gray-800 mb-[0.5vw] font-semibold text-start whitespace-nowrap">Hey I’m a</p>
-            <h1 className="lg:text-[9vw] text-[45px] font-semibold leading-[0.6] lg:-tracking-normal -tracking-normal">Software</h1>
+            <p className="lg:text-[3vw] text-[17px] text-gray-800 mb-[0.5vw] font-semibold whitespace-nowrap">Hey I’m a</p>
+            <h1 className="lg:text-[9vw] text-[45px] font-semibold leading-[0.6]">Software</h1>
           </div>
           <div />
           <div />
           <div className="flex items-end justify-end z-10">
-            <h1 className="lg:text-[9vw] text-[42px]  text-emerald-600 font-bold leading-[0.75] tracking-normal underline decoration-emerald-200/50 underline-offset-[2vw] ">Developer</h1>
+            <h1 className="lg:text-[9vw] text-[42px] relative left-6 lg:left-32 text-emerald-600 font-bold leading-[0.75] underline decoration-emerald-200/50 underline-offset-[2vw]">Developer</h1>
           </div>
         </div>
       </div>
 
       {/* MAIN IMAGE */}
-      <div ref={imageRef} className="absolute lg:top-[25vh] top-[20vh] w-full z-20 flex justify-center pointer-events-none">
-        <img src={mainImage} alt="main" className="lg:max-w-[1500px] max-w-[350px]" />
+      <div ref={imageRef} className="absolute lg:top-[25vh] top-[22vh] w-full z-20 flex justify-center pointer-events-none">
+        <img src={mainImage} alt="main" className="lg:max-w-[1500px] max-w-[350px] object-contain" />
       </div>
 
       {/* BUTTONS */}
-      <div ref={btnRightRef} className="absolute lg:right-28 right-10 lg:top-[75vh] top-[20vh] z-30">
+      <div ref={btnRightRef} className="absolute lg:right-28 right-8 lg:top-[75vh] top-[24vh] z-30">
         <div className="float-fast relative">
-          {/* Inline SVG matching the green cursor */}
           <svg
             viewBox="0 0 24 24"
-            className="absolute lg:-top-8 lg:-left-7 -top-4 -left-5 lg:w-10 lg:h-10 w-5 h-5 z-40 drop-shadow-md"
+            className="absolute lg:-top-8 lg:-left-7 -top-4 -left-4 lg:w-10 lg:h-10 w-6 h-6 z-40"
             fill="#21db7e"
             stroke="#1a8a4e"
             strokeWidth="1.5"
@@ -99,31 +100,25 @@ function FrontPage() {
           >
             <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
           </svg>
-
-          <button className="bg-[#21db7e] hover:bg-[#21db7e] text-black lg:text-2xl text-[10px] lg:px-8 px-3 lg:py-4 py-[5px] lg:rounded-2xl rounded-[7px] shadow-lg font-semibold border border-black">
+          <button className="bg-[#21db7e] text-black lg:text-2xl text-[11px] lg:px-8 px-4 lg:py-4 py-2 lg:rounded-2xl rounded-lg shadow-lg font-semibold border border-black">
             Perhaps you?
           </button>
         </div>
       </div>
 
-      <div ref={btnLeftRef} className="absolute lg:left-44 lg:bottom-44 bottom-12 left-4 z-30">
+      <div ref={btnLeftRef} className="absolute lg:left-44 lg:bottom-44 bottom-16 left-8 z-30">
         <div className="float relative group">
-          {/* Purple Cursor - Rotated to match image_7f4140.png */}
           <svg
             viewBox="0 0 24 24"
-            className="absolute lg:-top-8 -top-4 lg:-right-6 -right-3 lg:w-10 lg:h-10 w-5 h-5 z-40 drop-shadow-md"
+            className="absolute lg:-top-8 -top-4 lg:-right-6 -right-3 lg:w-10 lg:h-10 w-6 h-6 z-40"
             fill="#635bff"
             stroke="#2e2a7a"
             strokeWidth="2"
-            /* Rotate value adjusted to 20deg to point the tip 
-               downward toward the button text 
-            */
             style={{ transform: 'rotate(86deg)' }}
           >
             <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
           </svg>
-
-          <button className="bg-[#635bff] hover:bg-[#544df0] text-white lg:text-2xl text-[10px] lg:px-8 px-3 lg:py-4 py-[5px] lg:rounded-2xl rounded-[7px] shadow-lg font-semibold border border-black">
+          <button className="bg-[#635bff] text-white lg:text-2xl text-[11px] lg:px-8 px-4 lg:py-4 py-2 lg:rounded-2xl rounded-lg shadow-lg font-semibold border border-black">
             Other Designer
           </button>
         </div>
@@ -131,10 +126,10 @@ function FrontPage() {
 
       {/* GRADIENT SECTION */}
       <div
-        className="absolute bottom-0 w-full h-[40vh] z-[5]"
+        className="absolute bottom-0 w-full h-[30vh] z-[5] pointer-events-none"
         style={{ background: "linear-gradient(to bottom, transparent, #fff, #defff7)" }}
       />
-    </div >
+    </div>
   );
 }
 
