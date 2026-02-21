@@ -13,15 +13,15 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Routes
-app.use(cors({origin: `${process.env.FRONTEND_URL}`,credentials: true}));
+// app.use(cors({origin: `${process.env.FRONTEND_URL}`,credentials: true}));
 
 // const cors = require('cors');
 
-// app.use(cors({
-//   origin: `${process.env.FRONTEND_URL}`, // Replace with your actual frontend URL
-//   methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-//   credentials: true
-// }));
+app.use(cors({
+  origin: `${process.env.FRONTEND_URL}`, // Replace with your actual frontend URL
+  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+  credentials: true
+}));
 
 
 app.use('/api', userRoutes);
