@@ -19,7 +19,7 @@ const SecondPage = () => {
   }, []);
 
   return (
-    <div id="about" className="relative w-full lg:min-h-screen bg-white overflow-x-hidden font-sans py-[5vw] px-[8vw] md:h-[60vh] pt-24 pb-24">
+    <div id="about" className="relative w-full lg:min-h-screen bg-white overflow-hidden font-sans py-[5vw] px-[8vw] md:h-[60vh] pt-24 pb-24">
 
       {/* BACKGROUND GRID LINES */}
       <div

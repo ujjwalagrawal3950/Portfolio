@@ -88,7 +88,7 @@ export default function WorkPage() {
   const yTranslate = useTransform(pathProgress, [0, 0.4], ["0%", "-100%"]);
 
   return (
-    <div className="bg-[#F2F0E9] min-h-screen selection:bg-zinc-900 selection:text-white overflow-x-hidden">
+    <div className="bg-[#F2F0E9] min-h-screen selection:bg-zinc-900 selection:text-white overflow-hidden">
 
       {/* 1. HERO SECTION */}
       <section className="h-[80vh] flex flex-col justify-center px-6 md:px-20 max-w-7xl mx-auto">

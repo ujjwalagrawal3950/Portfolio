@@ -56,7 +56,7 @@ function FrontPage() {
       ref={containerRef}
       id="home"
       // Added opacity-0 to opacity-100 transition to hide the "jump"
-      className={`relative w-full lg:h-[170vh] h-[85vh] bg-white overflow-hidden transition-opacity duration-500 ${isReady ? 'opacity-100' : 'opacity-0'}`}
+      className={`relative w-full lg:h-[175vh] h-[65vh] bg-white overflow-hidden transition-opacity duration-500 ${isReady ? 'opacity-100' : 'opacity-0'}`}
     >
       {/* GRID BACKGROUND */}
       <div ref={gridRef} className="hidden lg:block absolute inset-0 opacity-[0.06] pointer-events-none z-0">
@@ -70,28 +70,28 @@ function FrontPage() {
       </div>
 
       {/* TEXT SECTION */}
-      <div ref={textRef} className="relative w-full z-10 lg:pt-[24vh] pt-[15vh] px-8 max-w-[1500px] mx-auto">
-        <div className="grid grid-cols-2 lg:h-[72vh] h-[22vh]">
+      <div ref={textRef} className="relative w-full z-10 lg:pt-[24vh] pt-[15vh] px-6 max-w-[1500px] mx-auto">
+        <div className="grid grid-cols-2 lg:h-[72vh] h-[22vh] lg:px-24">
           <div className="z-10 text-start">
             <p className="lg:text-[3vw] text-[18px] text-gray-800 mb-[0.5vw] font-semibold">Hey I’m a</p>
             {/* CLAMP ensures font doesn't get too big on ultra-wide screens */}
-            <h1 className="text-[45px] lg:text-[clamp(4rem,9vw,10rem)] font-bold leading-[0.7] tracking-tighter">Software</h1>
+            <h1 className="text-[45px] lg:text-[128px] font-bold leading-[0.7] tracking-tighter">Software</h1>
           </div>
           <div />
           <div />
           <div className="flex items-end justify-end z-10">
-            <h1 className="text-[42px] lg:text-[clamp(4rem,9vw,10rem)] relative lg:left-0 text-emerald-600 font-bold leading-[0.7] underline decoration-emerald-200/50 underline-offset-[2vw] tracking-tighter">Developer</h1>
+            <h1 className="text-[45px] lg:text-[128px] relative lg:left-0 text-emerald-600 font-bold leading-[0.7] underline decoration-emerald-200/50 underline-offset-[2vw] tracking-tighter">Developer</h1>
           </div>
         </div>
       </div>
 
       {/* MAIN IMAGE */}
-      <div ref={imageRef} className="absolute lg:top-[25vh] top-[22vh] w-full z-20 flex justify-center pointer-events-none">
+      <div ref={imageRef} className="absolute lg:top-[25vh] top-[18vh] w-full z-20 flex justify-center pointer-events-none">
         <img
           src={mainImage}
           alt="main"
           onLoad={() => ScrollTrigger.refresh()}
-          className="lg:max-w-[1400px] max-w-[350px] object-contain h-auto"
+          className="lg:max-w-[1200px] max-w-[350px] object-contain h-auto"
         />
       </div>
 
@@ -99,7 +99,7 @@ function FrontPage() {
       <div ref={btnRightRef} className="absolute lg:right-28 right-8 lg:top-[75vh] top-[24vh] z-30">
         <div className="float-fast relative">
           {/* SVG Cursor */}
-          <button className="bg-[#21db7e] text-black lg:text-2xl text-[12px] px-6 py-2 lg:px-10 lg:py-5 lg:rounded-2xl rounded-lg shadow-xl font-bold border-2 border-black whitespace-nowrap transition-transform active:scale-95">
+          <button className="bg-[#21db7e] text-black lg:text-xl text-[12px] px-6 py-2 lg:px-6 lg:py-4 lg:rounded-2xl rounded-lg shadow-xl font-semibold border-2 border-black whitespace-nowrap transition-transform active:scale-95">
             Perhaps you?
           </button>
         </div>
@@ -108,7 +108,7 @@ function FrontPage() {
       <div ref={btnLeftRef} className="absolute lg:left-44 lg:bottom-44 bottom-16 left-8 z-30">
         <div className="float relative group">
           {/* SVG Cursor */}
-          <button className="bg-[#635bff] text-white lg:text-2xl text-[12px] px-6 py-2 lg:px-10 lg:py-5 lg:rounded-2xl rounded-lg shadow-xl font-bold border-2 border-black whitespace-nowrap transition-transform active:scale-95">
+          <button className="bg-[#635bff] text-white lg:text-xl text-[12px] px-6 py-2 lg:px-8 lg:py-4 lg:rounded-2xl rounded-lg shadow-xl font-semibold border-2 border-black whitespace-nowrap transition-transform active:scale-95">
             Other Designer
           </button>
         </div>
