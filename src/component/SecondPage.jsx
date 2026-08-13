@@ -42,19 +42,18 @@ const SecondPage = () => {
           </div>
 
           <div className="text-[#333] leading-[1.6]">
-            <h2 className="text-[4.5vw] md:text-[1.4vw] font-medium mb-[2vw] text-start">
-              Hey there! I’m Ayush, a Digital Product Designer from New Delhi 🇮🇳.
-              My job? turn complexity into simplicity. I love the sweet spot where aesthetics
-              meet usability—where pixels serve a purpose.
+            <h2 className="text-[4vw] md:text-[1.4vw] font-medium mb-[2vw] text-start">
+              Hi, I’m Ujjwal Agrawal, currently completing my BTech at NIT Jalandhar. I specialize in full-stack
+               web development with a strong passion for software optimization and architecting scalable applications.
             </h2>
-            <p className="text-[4vw] md:text-[1.4vw] font-medium mb-[2vw] text-start">
-              Outside of design, you’ll find me binge-watching, sketching random ideas, or
-              chasing the perfect spotify playlist 🎧. If you’re into design, creativity, or
-              just good conversations, let’s connect! ☕
+            <p className="text-[3.5vw] md:text-[1.4vw] font-medium mb-[2vw] text-start">
+              I enjoy combining robust engineering with exceptional user experiences, 
+              from optimizing backend systems to building developer-focused tools. Passionate about problem-solving, 
+              I’m eager to build impactful digital products and solve meaningful challenges.
             </p>
           </div>
 
-          <div className='w-fit scale-[0.8] md:scale-100 origin-left lg:mt-1 mt-7'>
+          <div className='w-fit scale-[0.8] md:scale-100 origin-left lg:mt-0 mt-7'>
             <ButtonAnimation />
           </div>
         </div>

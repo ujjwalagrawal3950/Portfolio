@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import gsap from 'gsap';
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
 const ResumeButton = () => {
@@ -7,6 +8,7 @@ const ResumeButton = () => {
   const textRef = useRef(null);
   const iconRef = useRef(null);
   const containerRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     const tl = gsap.timeline();
@@ -73,6 +75,7 @@ const ResumeButton = () => {
       className="resume-btn"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={() => navigate('/resume')}
     >
       <div ref={bgRef} className="btn-fill-bg " />
 

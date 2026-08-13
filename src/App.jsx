@@ -16,6 +16,8 @@ import AdminDashboard from './Admin/AdminPortal';
 import './App.css';
 import Contact from './component/Contact';
 import AdminUserList from './Admin/AdminUserList';
+import Resume from './component/Resume';
+
 
 const LandingPage = () => (
   <>
@@ -72,6 +74,7 @@ function App() {
       <div className="w-full bg-[#030303] relative min-h-screen">
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/resume" element={<Resume />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<ProtectedAdmin><AdminDashboard /></ProtectedAdmin>} />
           <Route path="/admin/users" element={<ProtectedAdmin><AdminUserList /></ProtectedAdmin>} />
