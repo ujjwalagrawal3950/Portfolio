@@ -229,7 +229,7 @@ const DotMatrixVisualizer = forwardRef(({ audioRef, isPlaying }, ref) => {
       </div>
     </div>
   );
-};
+});
 
 const AudioPlayer = () => {
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
