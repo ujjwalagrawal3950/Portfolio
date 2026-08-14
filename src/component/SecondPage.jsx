@@ -1,23 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+import React from 'react';
 import ButtonAnimation from "./ButtonAnimation";
-import ProfileImage from "../assets/demon_slayer.png"
+import AudioPlayer from "./AudioPlayer";
 
 const SecondPage = () => {
-  const polaroidRef = useRef(null);
-
-  useEffect(() => {
-    // Pendulum Animation
-    gsap.to(polaroidRef.current, {
-      rotation: -9,
-      duration: 2,
-      ease: "sine.inOut",
-      repeat: -1,
-      yoyo: true,
-      transformOrigin: "50% 0%",
-    });
-  }, []);
-
   return (
     <div id="about" className="relative w-full lg:min-h-screen bg-white overflow-hidden font-sans py-[5vw] px-[8vw] md:h-[60vh] pt-24 pb-24">
 
@@ -31,7 +16,7 @@ const SecondPage = () => {
         }}
       />
 
-      {/* CHANGED: flex-col-reverse makes the second item (image) appear first on mobile */}
+      {/* CHANGED: flex-col-reverse makes the second item (image/player) appear first on mobile */}
       <div className="relative z-10 flex flex-col-reverse md:grid md:grid-cols-2 gap-[5vw] items-center">
 
         {/* LEFT CONTENT (Now appears second on mobile) */}
@@ -58,33 +43,9 @@ const SecondPage = () => {
           </div>
         </div>
 
-        {/* RIGHT PHOTO (Now appears first on mobile) */}
+        {/* RIGHT MUSIC PLAYER (Now appears first on mobile) */}
         <div className="flex justify-center relative mb-[8vw] md:mb-0">
-          <div
-            ref={polaroidRef}
-            className="bg-white p-[2vw] pb-[1.5vw] shadow-[0_10px_30px_rgba(0,0,0,0.1)] rotate-[3deg] border border-[#EEE] w-[60vw] md:w-[28vw] aspect-[3/4] md:h-[72vh] relative"
-            style={{ willChange: "transform" }}
-          >
-            {/* Red Pin */}
-            <div className="absolute -top-[1.2vw] left-1/2 -translate-x-1/2 z-20">
-              <div className="w-[4.5vw] h-[4.5vw] md:w-[2vw] md:h-[2vw] bg-[#B92B27] rounded-full shadow-inner relative">
-                <div className="absolute top-1/4 left-1/4 w-[0.8vw] h-[0.8vw] bg-white opacity-30 rounded-full"></div>
-              </div>
-            </div>
-
-            {/* Image */}
-            <div className="w-full aspect-[9/10] bg-gray-200 overflow-hidden">
-              <img
-                src={ProfileImage}
-                alt="Ayush"
-                className="w-full h-full object-cover grayscale-[0.2]"
-              />
-            </div>
-
-            <p className="text-center text-[4vw] md:text-[1.5vw] mt-[1vw] md:mt-[0.5vw] font-handwriting text-[#777]">
-              Pick me!
-            </p>
-          </div>
+          <AudioPlayer />
         </div>
       </div>
     </div>

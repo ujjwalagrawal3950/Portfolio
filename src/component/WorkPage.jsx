@@ -1,79 +1,150 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Zap, Eye, Layout, X, Binary } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Zap, Eye, Layout, X, Binary, Lock, LockKeyhole } from "lucide-react";
 
 // --- EXPANDED DATASET ---
 const PROJECTS = [
   {
     id: "01",
-    title: "Neuroflow",
-    category: "AI Systems",
+    title: "SyncBoard",
+    category: "Real-Time Systems",
     icon: <Zap size={20} />,
-    image: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=800",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800",
     size: "md:col-span-2 md:row-span-2",
-    description: "Built a predictive automation engine for creative workflows, reducing manual task time by 40%.",
-    tech: ["React", "Python", "TensorFlow"],
-    logic: "The challenge was visualizing complex neural nodes. We used force-directed graph logic to map data points in real-time."
+    description: "Engineered a high-performance 2D canvas whiteboard with real-time multi-user synchronization, live cursor tracking, and modular template kits.",
+    tech: ["React 19", "HTML5 Canvas", "Socket.io", "Redux Toolkit", "Node.js", "MongoDB", "OAuth 2.0"],
+    logic: "Implemented viewport transformation mathematics for smooth pan/zoom, state stacks in Redux for non-destructive undo/redo, and an event-driven Socket.io pipeline for low-latency cursor broadcasting.",
+    github: "https://github.com/ujjwalagrawal3950/collaborative-whiteboard"
   },
   {
     id: "02",
-    title: "Aura UI",
-    category: "Design Lab",
-    icon: <Layout size={20} />,
-    image: "https://images.unsplash.com/photo-1635776062127-d379bfcba9f8?w=800",
+    title: "Bolt AI",
+    category: "Generative AI",
+    icon: <Zap size={20} />,
+    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800",
     size: "md:col-span-1 md:row-span-1",
-    description: "A comprehensive design system focused on glassmorphism and micro-interactions.",
-    tech: ["Framer Motion", "Tailwind", "Radix UI"],
-    logic: "Focused on perceived performance using skeletal loading and staggered animation entries for heavy data sets."
+    description: "Built an AI-driven web application that synthesizes production-ready website layouts, functional code, and live previews from natural language prompts.",
+    tech: ["Next.js", "React", "Google Gemini AI", "Convex", "Tailwind CSS", "Axios"],
+    logic: "Integrated Convex reactive backend workspaces with Google Generative AI streaming APIs to orchestrate live code compilation and instant interactive sandbox previews.",
+    github: "https://github.com/ujjwalagrawal3950/Bolt"
   },
   {
     id: "03",
-    title: "Vision",
-    category: "Branding",
-    icon: <Eye size={20} />,
-    image: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=800",
+    title: "Static",
+    category: "Web3",
+    icon: <LockKeyhole size={20} />,
+    image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=800",
     size: "md:col-span-1 md:row-span-2",
-    description: "Next-gen visual identity for a decentralized cloud infrastructure provider.",
-    tech: ["Three.js", "GLSL", "Blender"],
-    logic: "The brand core uses generative shapes that react to server load data, physically representing the infrastructure health."
+    description: "A decentralized storage visualization tool for the InterPlanetary File System (IPFS).",
+    tech: ["Web3.js", "Rust", "Node.js"],
+    logic: "Solved high-latency data fetching by implementing a local caching layer with IndexedDB for instant UI updates.",
+    github: "https://github.com/ujjwalagrawal3950",
+    isLocked: true
   },
   {
     id: "04",
-    title: "Static",
-    category: "Web3",
-    icon: <Zap size={20} />,
-    image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?w=800",
+    title: "Blog Platform",
+    category: "Full-Stack Web",
+    icon: <Layout size={20} />,
+    image: "https://media.istockphoto.com/id/860887528/photo/whats-your-story-concept.jpg?s=1024x1024&w=is&k=20&c=Y1ccLevmP8pBOtpSIfrYkjTrrMMH0oY5hWl66C-DPXc=",
     size: "md:col-span-1 md:row-span-1",
-    description: "A decentralized storage visualization tool for the InterPlanetary File System (IPFS).",
-    tech: ["Web3.js", "Rust", "Node.js"],
-    logic: "Solved high-latency data fetching by implementing a local caching layer with IndexedDB for instant UI updates."
+    description: "A modern full-stack blogging and publishing platform featuring dynamic markdown/rich-text writing, article categorization, and engagement systems.",
+    tech: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "JWT"],
+    logic: "Engineered database indexing for fast content queries, integrated secure JWT authentication for author workflows, and implemented responsive reading layouts with optimized image loading.",
+    github: "https://github.com/ujjwalagrawal3950/Blog-Project"
   },
 ];
 
-const BentoCard = ({ project, onClick }) => (
-  <motion.div
-    whileHover={{ y: -10 }}
-    onClick={() => onClick(project)}
-    className={`relative group overflow-hidden rounded-[2.5rem] bg-zinc-900 border border-zinc-800 p-8 flex flex-col justify-between cursor-pointer transition-all duration-500 ${project.size}`}
-  >
-    <div
-      className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700 grayscale group-hover:grayscale-0 scale-110 group-hover:scale-100"
-      style={{ backgroundImage: `url(${project.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-    />
-    <div className="relative z-10 flex justify-between items-start">
-      <div className="p-3 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-white">
-        {project.icon}
+const BentoCard = ({ project, onClick }) => {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    if (!project.isLocked || !cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ y: project.isLocked ? -2 : -10 }}
+      whileTap={project.isLocked ? { x: [-3, 3, -3, 3, 0], transition: { duration: 0.3 } } : { scale: 0.98 }}
+      onClick={() => {
+        if (!project.isLocked) {
+          onClick(project);
+        }
+      }}
+      className={`relative group overflow-hidden rounded-[2.5rem] bg-zinc-900 border border-zinc-800 p-8 flex flex-col justify-between transition-all duration-500 ${project.size} ${project.isLocked
+        ? "cursor-none select-none hover:border-amber-500/30 opacity-75 hover:opacity-90"
+        : "cursor-pointer"
+        }`}
+    >
+      {/* Floating Animated Lock Cursor on Hover */}
+      {project.isLocked && isHovered && (
+        <motion.div
+          className="pointer-events-none absolute z-50 flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400 text-black font-bold text-[10px] tracking-wider uppercase shadow-xl shadow-amber-500/40"
+          style={{
+            left: mousePos.x,
+            top: mousePos.y,
+            transform: "translate(-50%, -50%)"
+          }}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0, opacity: 0 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        >
+          <motion.div
+            animate={{ rotate: [0, -10, 10, -5, 0] }}
+            transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 1 }}
+          >
+            <LockKeyhole size={14} />
+          </motion.div>
+          <span>Locked</span>
+        </motion.div>
+      )}
+
+      <div
+        className="absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity duration-700 grayscale group-hover:grayscale-0 scale-110 group-hover:scale-100"
+        style={{ backgroundImage: `url(${project.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      />
+      <div className="relative z-10 flex justify-between items-start">
+        <div className="p-3 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-white">
+          {project.icon}
+        </div>
+        <div className={`w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 shadow-lg ${project.isLocked ? "bg-amber-400 text-black shadow-amber-500/30" : "bg-white text-black shadow-white/20"
+          }`}>
+          {project.isLocked ? (
+            <motion.div
+              className="flex items-center justify-center"
+              animate={{ rotate: [0, -12, 12, -6, 0] }}
+              transition={{ duration: 0.6, repeat: Infinity, repeatDelay: 2 }}
+            >
+              <LockKeyhole size={18} />
+            </motion.div>
+          ) : (
+            <ArrowUpRight size={20} />
+          )}
+        </div>
       </div>
-      <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-black opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 shadow-lg">
-        <ArrowUpRight size={20} />
+      <div className="relative z-10">
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-bold tracking-[0.3em] text-zinc-500 uppercase">{project.category}</span>
+          {project.isLocked && (
+            <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 border border-amber-400/20 uppercase tracking-widest">
+              Coming Soon
+            </span>
+          )}
+        </div>
+        <h3 className="text-3xl font-medium text-white mt-2 leading-tight tracking-tight">{project.title}</h3>
       </div>
-    </div>
-    <div className="relative z-10">
-      <span className="text-[10px] font-bold tracking-[0.3em] text-zinc-500 uppercase">{project.category}</span>
-      <h3 className="text-3xl font-medium text-white mt-2 leading-tight tracking-tight">{project.title}</h3>
-    </div>
-  </motion.div>
-);
+    </motion.div>
+  );
+};
 
 export default function WorkPage() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -279,9 +350,20 @@ export default function WorkPage() {
                   </section>
                 </div>
 
-                <button className="group w-full py-6 bg-white text-black rounded-full font-black uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-4 hover:bg-[#a3e635] transition-all shadow-xl active:scale-95">
-                  View Repository <Binary size={16} className="group-hover:rotate-12 transition-transform" />
-                </button>
+                {selectedProject.isLocked ? (
+                  <div className="w-full py-6 bg-zinc-900 text-amber-400 rounded-full font-black uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-4 border border-amber-400/20 shadow-xl cursor-not-allowed">
+                    Under Development • Coming Soon <Lock size={16} />
+                  </div>
+                ) : (
+                  <a
+                    href={selectedProject.github || "https://github.com/ujjwalagrawal3950/collaborative-whiteboard"}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group w-full py-6 bg-white text-black rounded-full font-black uppercase tracking-[0.2em] text-[10px] flex items-center justify-center gap-4 hover:bg-[#a3e635] transition-all shadow-xl active:scale-95 text-center cursor-pointer"
+                  >
+                    View Repository <Binary size={16} className="group-hover:rotate-12 transition-transform" />
+                  </a>
+                )}
               </div>
             </motion.div>
           </>

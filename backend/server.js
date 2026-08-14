@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/dbconnect');
 const userRoutes = require('./Routes/UserRoutes');
 const authRoutes = require('./Routes/AuthAdmin');
+const audioRoutes = require('./Routes/AudioRoutes');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const app = express();
@@ -26,6 +27,7 @@ app.use(cors({
 
 app.use('/api', userRoutes);
 app.use('/api', authRoutes);
+app.use('/api/audio', audioRoutes);
 
 mongoose.connection.on('error', err => {
   console.log("Mongoose connection error: ", err);
