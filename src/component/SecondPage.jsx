@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ButtonAnimation from "./ButtonAnimation";
 import AudioPlayer from "./AudioPlayer";
+import ElectricBorder from "./ElectricBorder";
 
 const SecondPage = () => {
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+
   return (
     <div id="about" className="relative w-full lg:min-h-screen bg-white overflow-hidden font-sans py-[5vw] px-[8vw] md:h-[60vh] pt-24 pb-24">
+      {isMusicPlaying && (
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <ElectricBorder speed={2} chaos={10} thickness={2} glow={true} color="#a3e635" glowColor="#a3e635" />
+        </div>
+      )}
 
       {/* BACKGROUND GRID LINES */}
       <div
@@ -45,7 +53,7 @@ const SecondPage = () => {
 
         {/* RIGHT MUSIC PLAYER (Now appears first on mobile) */}
         <div className="flex justify-center relative mb-[8vw] md:mb-0">
-          <AudioPlayer />
+          <AudioPlayer onPlayStateChange={setIsMusicPlaying} />
         </div>
       </div>
     </div>

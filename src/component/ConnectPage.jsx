@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, CheckCircle2, Zap, Users, Loader2 } from 'lucide-react';
 import Matter from 'matter-js';
 import { toast } from 'sonner';
+import LiquidCarveButton from './LiquidCarveButton';
 
 // Change this to your actual backend URL
 const API_BASE_URL = `${import.meta.env.VITE_BACKEND_URL}`;
@@ -195,7 +196,10 @@ export default function ConnectPage() {
                             THE <span className="text-[#a3e635]">ORBIT</span>
                         </motion.h1>
                         <p className="text-zinc-500 mt-4 font-bold text-sm tracking-widest uppercase">
-                            Collective Intelligence Node
+                            Global Connection Field
+                        </p>
+                        <p className="text-zinc-400 mt-6 text-sm leading-relaxed max-w-sm">
+                            Upload your profile picture and choose an alias to inject yourself into the Orbit network.
                         </p>
                     </header>
 
@@ -209,7 +213,7 @@ export default function ConnectPage() {
                                             type="text"
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
-                                            placeholder="Alias..."
+                                            placeholder="Your Name..."
                                             required
                                             className="w-full bg-black/50 border border-zinc-800 p-4 rounded-2xl focus:border-[#a3e635] outline-none transition-all font-mono"
                                         />
@@ -223,8 +227,8 @@ export default function ConnectPage() {
                                                     exit={{ opacity: 0, y: -5 }}
                                                     className="absolute left-1 top-[110%] w-full pointer-events-none"
                                                 >
-                                                    <span className="text-[13px] font-mono text-[#a3e635] animate-pulse block leading-relaxed italic text-start">
-                                                        "Sir Aadhe Paise le lena lekin intern pe hire kar lo"
+                                                    <span className="text-[13px] font-mono text-[#a3e635] animate-pulse block leading-relaxed text-start">
+                                                        "Hire Me !! 🥺"
                                                     </span>
                                                 </motion.div>
                                             )}
@@ -247,13 +251,16 @@ export default function ConnectPage() {
                                     </span>
                                 </div>
 
-                                <button
+                                <LiquidCarveButton
+                                    type="submit"
                                     disabled={isSubmitting}
-                                    className="w-full bg-white text-black font-black py-4 rounded-2xl flex items-center justify-center gap-2 hover:bg-[#a3e635] transition-all active:scale-95 group disabled:opacity-50"
+                                    className="w-full"
+                                    padding="20px 0"
+                                    colors={{ fill: "#FFFFFF", textColor: "#000000" }}
                                 >
                                     {isSubmitting ? <Loader2 className="animate-spin" size={20} /> : <Zap className="w-4 h-4 fill-black" />}
                                     {isSubmitting ? "TRANSMITTING..." : "JOIN FIELD"}
-                                </button>
+                                </LiquidCarveButton>
                             </form>
                         ) : (
                             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-center py-6">

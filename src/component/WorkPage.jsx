@@ -14,7 +14,7 @@ const PROJECTS = [
     description: "Engineered a high-performance 2D canvas whiteboard with real-time multi-user synchronization, live cursor tracking, and modular template kits.",
     tech: ["React 19", "HTML5 Canvas", "Socket.io", "Redux Toolkit", "Node.js", "MongoDB", "OAuth 2.0"],
     logic: "Implemented viewport transformation mathematics for smooth pan/zoom, state stacks in Redux for non-destructive undo/redo, and an event-driven Socket.io pipeline for low-latency cursor broadcasting.",
-    github: "https://github.com/ujjwalagrawal3950/collaborative-whiteboard"
+    github: "https://white-board-lac.vercel.app"
   },
   {
     id: "02",

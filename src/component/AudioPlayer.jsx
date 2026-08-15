@@ -231,7 +231,7 @@ const DotMatrixVisualizer = forwardRef(({ audioRef, isPlaying }, ref) => {
   );
 });
 
-const AudioPlayer = () => {
+const AudioPlayer = ({ onPlayStateChange }) => {
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
@@ -267,6 +267,10 @@ const AudioPlayer = () => {
       });
     }
   }, [currentSongIndex]);
+
+  useEffect(() => {
+    if (onPlayStateChange) onPlayStateChange(isPlaying);
+  }, [isPlaying, onPlayStateChange]);
 
   return (
     <div className="w-full md:w-[24vw] flex flex-col gap-3">
