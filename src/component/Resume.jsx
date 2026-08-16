@@ -29,9 +29,9 @@ const Resume = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gray-200 py-10 px-4 sm:px-6 lg:px-8 text-left flex justify-center">
+    <div className="min-h-screen bg-gray-200 py-10 px-4 sm:px-6 lg:px-8 text-left overflow-x-auto flex lg:justify-center">
       <div
-        className="w-full max-w-[800px] bg-white shadow-2xl min-h-[1100px] p-[40px] sm:p-[50px] lg:p-[60px] text-black relative"
+        className="w-[800px] min-w-[800px] shrink-0 bg-white shadow-2xl min-h-[1100px] p-[40px] sm:p-[50px] lg:p-[60px] text-black relative"
         style={{
           fontFamily: '"Computer Modern", "Times New Roman", Times, serif',
           lineHeight: '1.4',
